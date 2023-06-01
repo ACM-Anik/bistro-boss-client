@@ -12,25 +12,37 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const onSubmit = data => {
-        console.log(data);
+
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
+
                 updateUserProfile(data.name, data.photoURL)
                     .then(() => {
-                        console.log('user profile info updated')
-
-                        reset();
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'User created successfully.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        navigate('/');
-
+                        const saveUser = { name: data.name, email: data.email }
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(saveUser)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                                if (data.insertedId) {
+                                    reset();
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'User created successfully.',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/');
+                                }
+                            })
                     })
                     .catch(error => console.log(error))
             })
@@ -59,6 +71,13 @@ const SignUp = () => {
                             </div>
                             <div className="form-control">
                                 <label className="label">
+                                    <span className="label-text">Photo URL</span>
+                                </label>
+                                <input type="text"  {...register("photoURL", { required: true })} placeholder="Photo URL" className="input input-bordered" />
+                                {errors.photoURL && <span className="text-red-600">Photo URL is required</span>}
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
                                 <input type="email" {...register("email", { required: true })} name="email" placeholder="email" className="input input-bordered" />
@@ -83,10 +102,10 @@ const SignUp = () => {
                                 </label>
                             </div>
                             <div className="form-control mt-6">
-                                <input className="btn btn-primary" type="submit" value="SignUp" />
+                                <input className="btn btn-warning" type="submit" value="SignUp" />
                             </div>
                         </form>
-                        <p><small>Already have an account? <Link to="/logIn">LogIn</Link> </small></p>
+                        <p className="pl-8 pb-4"><small>Already have an account? <Link to="/logIn" className="text-warning font-bold">LogIn</Link> </small></p>
                     </div>
                 </div>
             </div>

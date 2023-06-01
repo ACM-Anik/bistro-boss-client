@@ -10,7 +10,7 @@ const FoodCard = ({item}) => {
     const [, refetch] = useCart();
     const navigate = useNavigate();
     const location = useLocation();
-
+ 
     const handleAddToCart = (item) => {
         console.log(item);
         if(user){

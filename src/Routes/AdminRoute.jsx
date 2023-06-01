@@ -1,13 +1,14 @@
-import { useContext } from "react";
-import { AuthContext } from "../Providers/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
+import useAdmin from "../Hooks/useAdmin";
 
 
-const PrivateRoute = ({children}) => {
-    const { user, loading } = useContext(AuthContext);
+const AdminRoute = ({ children }) => {
+    const { user, loading } = useAuth();
+    const [isAdmin, isAdminLoading] = useAdmin()
     const location = useLocation();
 
-    if(loading){
+    if (loading || isAdminLoading) {
         return (
             <div className="flex flex-col justify-center items-center min-h-screen">
                 <div className="btn btn-lg btn-ghost loading"></div>
@@ -16,10 +17,10 @@ const PrivateRoute = ({children}) => {
         )
     }
 
-    if (user) {
+    if (user && isAdmin) {
         return children;
     }
-    return <Navigate to="/login" state={{from: location}} replace></Navigate>
+    return <Navigate to="/" state={{ from: location }} replace></Navigate>
 };
 
-export default PrivateRoute;
+export default AdminRoute;
