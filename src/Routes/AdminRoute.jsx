@@ -10,10 +10,12 @@ const AdminRoute = ({ children }) => {
 
     if (loading || isAdminLoading) {
         return (
-            <div className="flex flex-col justify-center items-center min-h-screen">
-                <div className="btn btn-lg btn-ghost loading"></div>
-                <progress className="progress w-56"></progress>
-            </div>
+            <progress className="progress w-56"></progress>
+            
+            // <div className="flex flex-col justify-center items-center min-h-screen">
+            //     <div className="btn btn-lg btn-ghost loading"></div>
+            //     <progress className="progress w-56"></progress>
+            // </div>
         )
     }
 
