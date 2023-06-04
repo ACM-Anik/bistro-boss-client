@@ -6,7 +6,7 @@ import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
     const [cart] = useCart();
-    
+
     // TODO: load data from the server to have dynamic isAdmin based on data
     // const isAdmin = true;
     const [isAdmin] = useAdmin();
@@ -25,7 +25,7 @@ const Dashboard = () => {
                     {
                         isAdmin ?
                             <>
-                                <li><NavLink to="/dashboard/home"><FaHome></FaHome> Admin Home</NavLink></li>
+                                <li><NavLink to="/dashboard/adminHome"><FaHome></FaHome> Admin Home</NavLink></li>
                                 <li><NavLink to="/dashboard/addItem"><FaUtensils></FaUtensils>Add An Item</NavLink></li>
                                 <li><NavLink to="/dashboard/manageItems"><FaWallet></FaWallet> Manage Items</NavLink></li>
                                 <li><NavLink to="/dashboard/manageBookings"><FaBook></FaBook> Manage Bookings</NavLink></li>
@@ -33,7 +33,7 @@ const Dashboard = () => {
                             </>
                             :
                             <>
-                                <li><NavLink to="/dashboard/home"><FaHome></FaHome> User Home</NavLink></li>
+                                <li><NavLink to="/dashboard/userHome"><FaHome></FaHome> User Home</NavLink></li>
                                 <li><NavLink to="/dashboard/reservations"><FaCalendarAlt></FaCalendarAlt> Reservations</NavLink></li>
                                 <li><NavLink to="/dashboard/history"><FaWallet></FaWallet> Payment History</NavLink></li>
                                 <li>
